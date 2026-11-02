@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#087F5B"/>
+      <stop offset="100%" stop-color="#064E3B"/>
+    </linearGradient>
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3E5AB"/>
+      <stop offset="50%" stop-color="#C9A45C"/>
+      <stop offset="100%" stop-color="#9A7B38"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded squircle with padding for maskable safe zone -->
+  <rect width="512" height="512" rx="112" fill="url(#bg-grad)"/>
+
+  <!-- Subtle Islamic 8-point geometric star pattern ring -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="#C9A45C" stroke-opacity="0.2" stroke-width="2"/>
+  <circle cx="256" cy="256" r="160" fill="none" stroke="#FFFFFF" stroke-opacity="0.1" stroke-width="1.5" stroke-dasharray="6,6"/>
+
+  <!-- Elegant Mosque Dome & Minaret Silhouette -->
+  <!-- Main central dome -->
+  <path d="M 256 130 C 235 170 200 200 200 260 L 312 260 C 312 200 277 170 256 130 Z" fill="url(#gold-grad)"/>
+  
+  <!-- Dome Finial & Crescent on top -->
+  <line x1="256" y1="130" x2="256" y2="108" stroke="url(#gold-grad)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 256 94 A 12 12 0 1 1 262 116 A 9 9 0 1 0 256 94 Z" fill="url(#gold-grad)"/>
+
+  <!-- Left Minaret -->
+  <rect x="162" y="210" width="16" height="90" rx="3" fill="#FFFFFF" fill-opacity="0.9"/>
+  <polygon points="170,185 160,210 180,210" fill="url(#gold-grad)"/>
+
+  <!-- Right Minaret -->
+  <rect x="334" y="210" width="16" height="90" rx="3" fill="#FFFFFF" fill-opacity="0.9"/>
+  <polygon points="342,185 332,210 352,210" fill="url(#gold-grad)"/>
+
+  <!-- Mosque Base / Archways -->
+  <rect x="180" y="260" width="152" height="60" rx="4" fill="#FFFFFF" fill-opacity="0.95"/>
+  <!-- Central Arch -->
+  <path d="M 236 320 L 236 284 C 236 272 276 272 276 284 L 276 320 Z" fill="#064E3B"/>
+  <!-- Left Arch -->
+  <path d="M 194 320 L 194 292 C 194 282 222 282 222 292 L 222 320 Z" fill="#064E3B"/>
+  <!-- Right Arch -->
+  <path d="M 290 320 L 290 292 C 290 282 318 282 318 292 L 318 320 Z" fill="#064E3B"/>
+
+  <!-- Base line -->
+  <rect x="145" y="320" width="222" height="8" rx="4" fill="url(#gold-grad)"/>
+
+  <!-- Modern DEEN typography -->
+  <text x="256" y="375" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="36" fill="#FFFFFF" text-anchor="middle" letter-spacing="6">DEEN</text>
+  <text x="256" y="405" font-family="'Amiri', 'Noto Naskh Arabic', serif" font-weight="700" font-size="22" fill="#C9A45C" text-anchor="middle">دِين</text>
+</svg>

@@ -1,0 +1,30 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "fullscreen",
+  "name": "Deen App",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "deen",
+  "start_url": "/",
+  "theme_color": "#e1e8ff",
+  "icons": [
+    {
+      "src": "https://ais-dev-xpdtomotofgopruvksuxfr-325443001478.asia-east1.run.app/favicon.ico",
+      "type": "image/x-icon",
+      "isSquare": false,
+      "isPng": false,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 0,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    }
+  ],
+  "categories": [
+    "lifestyle"
+  ],
+  "id": "1100",
+  "description": "This is an islamic app"
+}

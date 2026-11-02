@@ -1,0 +1,8 @@
+{
+  "name": "DEEN — All-in-One Islamic Companion",
+  "description": "Comprehensive, authentic Islamic lifestyle companion featuring accurate prayer times, Quran reader with audio, verified Hadith library, Qibla compass, duas & adhkar, digital tasbih, worship tracking, and an AI Islamic assistant.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

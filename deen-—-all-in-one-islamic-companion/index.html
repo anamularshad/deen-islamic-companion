@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (function() {
+        // Fix for Chrome extensions attempting to monkey-patch window.fetch
+        // Prevents: "TypeError: Cannot set property fetch of #<Window> which has only a getter"
+        try {
+          if (typeof window !== 'undefined') {
+            var rawFetch = typeof window.fetch === 'function' ? window.fetch.bind(window) : window.fetch;
+            var currentFetch = rawFetch;
+            
+            // Redefine fetch on window with both getter and setter
+            try {
+              Object.defineProperty(window, 'fetch', {
+                get: function() { return currentFetch; },
+                set: function(val) { currentFetch = val; },
+                configurable: true,
+                enumerable: true
+              });
+            } catch (errWindow) {
+              // Fallback to Window.prototype if direct define on window is restricted
+              try {
+                if (typeof Window !== 'undefined' && Window.prototype) {
+                  Object.defineProperty(Window.prototype, 'fetch', {
+                    get: function() { return currentFetch; },
+                    set: function(val) { currentFetch = val; },
+                    configurable: true,
+                    enumerable: true
+                  });
+                }
+              } catch (errProto) {}
+            }
+          }
+        } catch (e) {}
+
+        // Global capture of extension errors and benign Vite HMR drops
+        if (typeof window !== 'undefined') {
+          window.addEventListener('error', function(event) {
+            var filename = String(event.filename || (event.error && event.error.fileName) || '');
+            var msg = String(event.message || (event.error && event.error.message) || '');
+            if (
+              filename.indexOf('chrome-extension://') !== -1 ||
+              filename.indexOf('moz-extension://') !== -1 ||
+              msg.indexOf('Cannot set property fetch') !== -1 ||
+              msg.indexOf('WebSocket closed without opened') !== -1
+            ) {
+              event.preventDefault();
+              event.stopImmediatePropagation();
+              return true;
+            }
+          }, true);
+
+          var prevOnError = window.onerror;
+          window.onerror = function(msg, url, line, col, error) {
+            var sMsg = String(msg || (error && error.message) || '');
+            var sUrl = String(url || '');
+            if (
+              sUrl.indexOf('chrome-extension://') !== -1 ||
+              sUrl.indexOf('moz-extension://') !== -1 ||
+              sMsg.indexOf('Cannot set property fetch') !== -1 ||
+              sMsg.indexOf('WebSocket closed without opened') !== -1
+            ) {
+              return true;
+            }
+            if (typeof prevOnError === 'function') {
+              return prevOnError.apply(this, arguments);
+            }
+            return false;
+          };
+
+          window.addEventListener('unhandledrejection', function(event) {
+            var reason = event.reason;
+            var msg = String((reason && reason.message) || reason || '');
+            var stack = String((reason && reason.stack) || '');
+            if (
+              msg.indexOf('Cannot set property fetch') !== -1 ||
+              msg.indexOf('WebSocket closed without opened') !== -1 ||
+              stack.indexOf('chrome-extension://') !== -1
+            ) {
+              event.preventDefault();
+              event.stopImmediatePropagation();
+            }
+          });
+        }
+
+        // Vite Safe WebSocket proxy for container environments
+        if (typeof window !== 'undefined' && window.WebSocket) {
+          const OrigWebSocket = window.WebSocket;
+          function ViteSafeWebSocket(url, protocols) {
+            const isViteHmr =
+              protocols === 'vite-hmr' ||
+              (Array.isArray(protocols) && protocols.includes('vite-hmr')) ||
+              (typeof url === 'string' && (url.includes('vite') || url.includes('token=')));
+            if (isViteHmr) {
+              const target = new EventTarget();
+              const fakeWs = {
+                readyState: 1, // WebSocket.OPEN
+                CONNECTING: 0,
+                OPEN: 1,
+                CLOSING: 2,
+                CLOSED: 3,
+                url: url,
+                protocol: 'vite-hmr',
+                extensions: '',
+                bufferedAmount: 0,
+                binaryType: 'blob',
+                send: function() {},
+                close: function() {},
+                addEventListener: function(type, listener, options) {
+                  target.addEventListener(type, listener, options);
+                },
+                removeEventListener: function(type, listener, options) {
+                  target.removeEventListener(type, listener, options);
+                },
+                dispatchEvent: function(event) {
+                  return target.dispatchEvent(event);
+                },
+                onopen: null,
+                onclose: null,
+                onerror: null,
+                onmessage: null,
+              };
+              setTimeout(() => {
+                target.dispatchEvent(new Event('open'));
+                if (typeof fakeWs.onopen === 'function') fakeWs.onopen(new Event('open'));
+              }, 0);
+              return fakeWs;
+            }
+            return new OrigWebSocket(url, protocols);
+          }
+          ViteSafeWebSocket.prototype = OrigWebSocket.prototype;
+          ViteSafeWebSocket.CONNECTING = OrigWebSocket.CONNECTING;
+          ViteSafeWebSocket.OPEN = OrigWebSocket.OPEN;
+          ViteSafeWebSocket.CLOSING = OrigWebSocket.CLOSING;
+          ViteSafeWebSocket.CLOSED = OrigWebSocket.CLOSED;
+          window.WebSocket = ViteSafeWebSocket;
+        }
+
+        const origError = console.error;
+        console.error = function(...args) {
+          const combined = args.map(a => String((a && a.message) || (a && a.stack) || a || '')).join(' ');
+          if (
+            combined.includes('Cannot set property fetch') ||
+            combined.includes('WebSocket closed without opened') ||
+            combined.includes('chrome-extension://')
+          ) {
+            return;
+          }
+          return origError.apply(console, args);
+        };
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>DEEN — All-in-One Islamic Companion</title>
+    <meta name="description" content="Comprehensive, authentic Islamic lifestyle companion featuring accurate prayer times, Quran reader with audio, verified Hadith library, Qibla compass, duas & adhkar, digital tasbih, worship tracking, and an AI Islamic assistant." />
+    <meta property="og:title" content="DEEN — All-in-One Islamic Companion" />
+    <meta property="og:description" content="Comprehensive, authentic Islamic lifestyle companion featuring accurate prayer times, Quran reader with audio, verified Hadith library, Qibla compass, duas & adhkar, digital tasbih, worship tracking, and an AI Islamic assistant." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#087F5B" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="DEEN" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#F7F9F6] text-[#17231F] dark:bg-[#101A16] dark:text-[#E4EAE5] transition-colors duration-200">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(function(err) {
+            console.warn('Service worker registration failed:', err);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
+

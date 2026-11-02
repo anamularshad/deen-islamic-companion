@@ -1,0 +1,88 @@
+{
+  "id": "com.deen.companion",
+  "name": "DEEN — All-in-One Islamic Companion",
+  "short_name": "DEEN",
+  "description": "Authentic Quran, accurate prayer times, Qibla compass, Hadith, Tasbih, and Islamic lifestyle companion.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "dir": "ltr",
+  "lang": "en",
+  "background_color": "#064E3B",
+  "theme_color": "#087F5B",
+  "prefer_related_applications": false,
+  "categories": ["lifestyle", "books", "education", "utilities"],
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "540x960",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "DEEN Mobile Home Dashboard"
+    },
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "DEEN Desktop & Tablet Suite"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Prayer Times",
+      "short_name": "Prayer",
+      "description": "View today's prayer times and countdown",
+      "url": "/?tab=prayer",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Holy Quran",
+      "short_name": "Quran",
+      "description": "Read all 114 Surahs with translation & audio",
+      "url": "/?tab=quran",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Qibla Compass",
+      "short_name": "Qibla",
+      "description": "Find accurate Kaaba direction",
+      "url": "/?sub=qibla",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mosques Near Me",
+      "short_name": "Mosques",
+      "description": "Find nearby masjids and prayer halls",
+      "url": "/?sub=mosques",
+      "icons": [{ "src": "/pwa-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}
